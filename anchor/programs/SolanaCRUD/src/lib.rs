@@ -1,70 +1,67 @@
-#![allow(clippy::result_large_err)]
 
 use anchor_lang::prelude::*;
+use std::mem::size_of;
 
 declare_id!("AsjZ3kWAUSQRNt2pZVeJkywhZ6gpLpHZmJjduPmKZDZZ");
 
 #[program]
-pub mod SolanaCRUD {
+pub mod student_data_module {
     use super::*;
 
-  pub fn close(_ctx: Context<CloseSolanaCRUD>) -> Result<()> {
-    Ok(())
-  }
+    pub fn create_student(ctx: Context<Initialize>, name: String, roll_no: u32, course_name: String) -> Result<()> {
+      let student_id = ctx.accounts.student_details.key();
+      let student_data = &mut ctx.accounts.student_details;
+      student_data.student_id = student_id;
+      student_data.student_name = name;
+      student_data.student_roll_no = roll_no;
+      student_data.student_course_name = course_name;
 
-  pub fn decrement(ctx: Context<Update>) -> Result<()> {
-    ctx.accounts.SolanaCRUD.count = ctx.accounts.SolanaCRUD.count.checked_sub(1).unwrap();
-    Ok(())
-  }
+      Ok(())
+    }
 
-  pub fn increment(ctx: Context<Update>) -> Result<()> {
-    ctx.accounts.SolanaCRUD.count = ctx.accounts.SolanaCRUD.count.checked_add(1).unwrap();
-    Ok(())
-  }
 
-  pub fn initialize(_ctx: Context<InitializeSolanaCRUD>) -> Result<()> {
-    Ok(())
-  }
+    pub fn update_student(ctx: Context<UpdateStudentData>, new_name: String, new_roll_no: u32, new_course_name: String) -> Result<()> {
 
-  pub fn set(ctx: Context<Update>, value: u8) -> Result<()> {
-    ctx.accounts.SolanaCRUD.count = value.clone();
-    Ok(())
-  }
+      let new_student_data = &mut ctx.accounts.student_update;
+      new_student_data.student_name = new_name;
+      new_student_data.student_roll_no = new_roll_no;
+      new_student_data.student_course_name = new_course_name;
+      Ok(())
+    }
+
+    pub fn delete_student(_ctx: Context<DeleteStudentData>) -> Result<()> {
+      Ok(())
+    }
 }
 
 #[derive(Accounts)]
-pub struct InitializeSolanaCRUD<'info> {
+pub struct Initialize<'info> {
+  #[account(init, payer = signer, space = size_of::<StudentData>() + 8)]
+  pub student_details: Account<'info, StudentData>,
   #[account(mut)]
-  pub payer: Signer<'info>,
-
-  #[account(
-  init,
-  space = 8 + SolanaCRUD::INIT_SPACE,
-  payer = payer
-  )]
-  pub SolanaCRUD: Account<'info, SolanaCRUD>,
-  pub system_program: Program<'info, System>,
-}
-#[derive(Accounts)]
-pub struct CloseSolanaCRUD<'info> {
-  #[account(mut)]
-  pub payer: Signer<'info>,
-
-  #[account(
-  mut,
-  close = payer, // close account and return lamports to payer
-  )]
-  pub SolanaCRUD: Account<'info, SolanaCRUD>,
+  pub signer: Signer<'info>,
+  pub system_program: Program<'info, System>
 }
 
 #[derive(Accounts)]
-pub struct Update<'info> {
+pub struct UpdateStudentData<'info> {
   #[account(mut)]
-  pub SolanaCRUD: Account<'info, SolanaCRUD>,
+  pub student_update: Account<'info, StudentData>,
+}
+
+
+#[derive(Accounts)]
+pub struct DeleteStudentData<'info> {
+  #[account(mut, close = signer)]
+  pub student_delete: Account<'info, StudentData>,
+  #[account(mut)]
+  pub signer: Signer<'info>,
 }
 
 #[account]
-#[derive(InitSpace)]
-pub struct SolanaCRUD {
-  count: u8,
+pub struct StudentData {
+  student_id: Pubkey,
+  student_name: String,
+  student_roll_no: u32,
+  student_course_name: String
 }
