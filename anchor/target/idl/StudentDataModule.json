@@ -1,0 +1,153 @@
+{
+  "address": "AsjZ3kWAUSQRNt2pZVeJkywhZ6gpLpHZmJjduPmKZDZZ",
+  "metadata": {
+    "name": "StudentDataModule",
+    "version": "0.1.0",
+    "spec": "0.1.0",
+    "description": "Created with Anchor"
+  },
+  "instructions": [
+    {
+      "name": "create_student",
+      "discriminator": [
+        78,
+        190,
+        199,
+        71,
+        237,
+        199,
+        19,
+        201
+      ],
+      "accounts": [
+        {
+          "name": "student_details",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "signer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "name": "roll_no",
+          "type": "u32"
+        },
+        {
+          "name": "course_name",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "delete_student",
+      "discriminator": [
+        161,
+        228,
+        26,
+        208,
+        119,
+        33,
+        103,
+        190
+      ],
+      "accounts": [
+        {
+          "name": "student_delete",
+          "writable": true
+        },
+        {
+          "name": "signer",
+          "writable": true,
+          "signer": true
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "update_student",
+      "discriminator": [
+        208,
+        104,
+        170,
+        157,
+        94,
+        249,
+        7,
+        125
+      ],
+      "accounts": [
+        {
+          "name": "student_update",
+          "writable": true
+        }
+      ],
+      "args": [
+        {
+          "name": "new_name",
+          "type": "string"
+        },
+        {
+          "name": "new_roll_no",
+          "type": "u32"
+        },
+        {
+          "name": "new_course_name",
+          "type": "string"
+        }
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "StudentData",
+      "discriminator": [
+        170,
+        185,
+        166,
+        151,
+        138,
+        238,
+        50,
+        101
+      ]
+    }
+  ],
+  "types": [
+    {
+      "name": "StudentData",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "student_id",
+            "type": "pubkey"
+          },
+          {
+            "name": "student_name",
+            "type": "string"
+          },
+          {
+            "name": "student_roll_no",
+            "type": "u32"
+          },
+          {
+            "name": "student_course_name",
+            "type": "string"
+          }
+        ]
+      }
+    }
+  ]
+}

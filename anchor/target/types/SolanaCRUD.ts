@@ -4,100 +4,35 @@
  * Note that this is only a type helper and is not the actual IDL. The original
  * IDL can be found at `target/idl/SolanaCRUD.json`.
  */
-export type SolanaCRUD = {
-  "address": "AsjZ3kWAUSQRNt2pZVeJkywhZ6gpLpHZmJjduPmKZDZZ",
+export type SolanaCrud = {
+  "address": "GCPpE6am6ZTXoRq1ptUPCzCV5gAfxBBadu19q1pfc8DW",
   "metadata": {
-    "name": "SolanaCRUD",
+    "name": "solanaCrud",
     "version": "0.1.0",
     "spec": "0.1.0",
     "description": "Created with Anchor"
   },
   "instructions": [
     {
-      "name": "close",
+      "name": "initializeStudent",
       "discriminator": [
-        98,
-        165,
-        201,
-        177,
-        108,
-        65,
-        206,
-        96
+        112,
+        55,
+        47,
+        7,
+        217,
+        128,
+        228,
+        180
       ],
       "accounts": [
         {
-          "name": "payer",
+          "name": "studentInitialization",
           "writable": true,
           "signer": true
         },
         {
-          "name": "SolanaCRUD",
-          "writable": true
-        }
-      ],
-      "args": []
-    },
-    {
-      "name": "decrement",
-      "discriminator": [
-        106,
-        227,
-        168,
-        59,
-        248,
-        27,
-        150,
-        101
-      ],
-      "accounts": [
-        {
-          "name": "SolanaCRUD",
-          "writable": true
-        }
-      ],
-      "args": []
-    },
-    {
-      "name": "increment",
-      "discriminator": [
-        11,
-        18,
-        104,
-        9,
-        104,
-        174,
-        59,
-        33
-      ],
-      "accounts": [
-        {
-          "name": "SolanaCRUD",
-          "writable": true
-        }
-      ],
-      "args": []
-    },
-    {
-      "name": "initialize",
-      "discriminator": [
-        175,
-        175,
-        109,
-        31,
-        13,
-        152,
-        155,
-        237
-      ],
-      "accounts": [
-        {
-          "name": "payer",
-          "writable": true,
-          "signer": true
-        },
-        {
-          "name": "SolanaCRUD",
+          "name": "signer",
           "writable": true,
           "signer": true
         },
@@ -107,57 +42,44 @@ export type SolanaCRUD = {
         }
       ],
       "args": []
-    },
-    {
-      "name": "set",
-      "discriminator": [
-        198,
-        51,
-        53,
-        241,
-        116,
-        29,
-        126,
-        194
-      ],
-      "accounts": [
-        {
-          "name": "SolanaCRUD",
-          "writable": true
-        }
-      ],
-      "args": [
-        {
-          "name": "value",
-          "type": "u8"
-        }
-      ]
     }
   ],
   "accounts": [
     {
-      "name": "SolanaCRUD",
+      "name": "studentData",
       "discriminator": [
-        255,
-        176,
-        4,
-        245,
-        188,
-        253,
-        124,
-        25
+        170,
+        185,
+        166,
+        151,
+        138,
+        238,
+        50,
+        101
       ]
     }
   ],
   "types": [
     {
-      "name": "SolanaCRUD",
+      "name": "studentData",
       "type": {
         "kind": "struct",
         "fields": [
           {
-            "name": "count",
-            "type": "u8"
+            "name": "studentId",
+            "type": "pubkey"
+          },
+          {
+            "name": "studentName",
+            "type": "string"
+          },
+          {
+            "name": "studentRollNo",
+            "type": "u32"
+          },
+          {
+            "name": "studentCourseName",
+            "type": "string"
           }
         ]
       }
